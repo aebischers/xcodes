@@ -50,7 +50,7 @@ public class Client {
             }
     }
     
-    public func login(accountName: String, password: String) -> Promise<Void> {
+    public func login(accountName: String, password: String, skip2FaUpgrade: Bool) -> Promise<Void> {
         var serviceKey: String!
         
         return firstly { () -> Promise<(data: Data, response: URLResponse)> in
@@ -96,6 +96,12 @@ public class Client {
             case 409:
                 return self.handleTwoStepOrFactor(data: data, response: response, serviceKey: serviceKey)
             case 412 where Client.authTypes.contains(responseBody.authType ?? ""):
+                if(skip2FaUpgrade){
+                    let sessionID = (httpResponse.allHeaderFields["X-Apple-ID-Session-Id"] as! String)
+                    let scnt = (httpResponse.allHeaderFields["scnt"] as! String)
+                    return self.updateSession(serviceKey: serviceKey, sessionID: sessionID, scnt: scnt)
+                }
+                
                 throw Error.appleIDAndPrivacyAcknowledgementRequired
             default:
                 throw Error.unexpectedSignInResponse(statusCode: httpResponse.statusCode,
@@ -165,7 +171,7 @@ public class Client {
             }
         }
     }
-    
+
     func updateSession(serviceKey: String, sessionID: String, scnt: String) -> Promise<Void> {
         return Current.network.dataTask(with: URLRequest.trust(serviceKey: serviceKey, sessionID: sessionID, scnt: scnt))
             .then { (data, response) -> Promise<Void> in

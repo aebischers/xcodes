@@ -523,7 +523,7 @@ final class XcodesKitTests: XCTestCase {
             }
         }
         var loginCallCount = 0
-        XcodesKit.Current.network.login = { _, _ in
+        XcodesKit.Current.network.login = { _, _, _ in
             defer { loginCallCount += 1 }
             if loginCallCount == 0 {
                 return Promise(error: Client.Error.invalidUsernameOrPassword(username: "test@example.com"))

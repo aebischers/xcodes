@@ -92,7 +92,7 @@ final class AppleAPITests: XCTestCase {
         let expectation = self.expectation(description: "promise fulfills")
 
         let client = Client()
-        client.login(accountName: "test@example.com", password: "ABC123")
+        client.login(accountName: "test@example.com", password: "ABC123", skip2FaUpgrade: false)
             .tap { result in
                 guard case .fulfilled = result else { 
                     XCTFail("login rejected")
@@ -160,7 +160,7 @@ final class AppleAPITests: XCTestCase {
         let expectation = self.expectation(description: "promise rejects")
 
         let client = Client()
-        client.login(accountName: "test@example.com", password: "ABC123")
+        client.login(accountName: "test@example.com", password: "ABC123", skip2FaUpgrade: false)
             .tap { result in
                 guard case .rejected(let error as AppleAPI.Client.Error) = result else { 
                     XCTFail("login fulfilled, but should have rejected with .invalidUsernameOrPassword error")
@@ -253,7 +253,7 @@ final class AppleAPITests: XCTestCase {
         let expectation = self.expectation(description: "promise fulfills")
 
         let client = Client()
-        client.login(accountName: "test@example.com", password: "ABC123")
+        client.login(accountName: "test@example.com", password: "ABC123", skip2FaUpgrade: false)
             .tap { result in
                 guard case .fulfilled = result else { 
                     XCTFail("login rejected")
@@ -339,7 +339,7 @@ final class AppleAPITests: XCTestCase {
         let expectation = self.expectation(description: "promise rejects")
 
         let client = Client()
-        client.login(accountName: "test@example.com", password: "ABC123")
+        client.login(accountName: "test@example.com", password: "ABC123", skip2FaUpgrade: false)
             .tap { result in
                 guard case .rejected(let error as AppleAPI.Client.Error) = result else { 
                     XCTFail("login fulfilled, but should have rejected with .incorrectSecurityCode error")
@@ -449,7 +449,7 @@ final class AppleAPITests: XCTestCase {
         let expectation = self.expectation(description: "promise fulfills")
 
         let client = Client()
-        client.login(accountName: "test@example.com", password: "ABC123")
+        client.login(accountName: "test@example.com", password: "ABC123", skip2FaUpgrade: false)
             .tap { result in
                 guard case .fulfilled = result else { 
                     XCTFail("login rejected")
@@ -550,7 +550,7 @@ final class AppleAPITests: XCTestCase {
         let expectation = self.expectation(description: "promise rejects")
 
         let client = Client()
-        client.login(accountName: "test@example.com", password: "ABC123")
+        client.login(accountName: "test@example.com", password: "ABC123", skip2FaUpgrade: false)
             .tap { result in
                 guard case .rejected(let error as AppleAPI.Client.Error) = result else { 
                     XCTFail("login fulfilled, but should have rejected with .incorrectSecurityCode error")
@@ -641,7 +641,7 @@ final class AppleAPITests: XCTestCase {
         let expectation = self.expectation(description: "promise rejects")
 
         let client = Client()
-        client.login(accountName: "test@example.com", password: "ABC123")
+        client.login(accountName: "test@example.com", password: "ABC123", skip2FaUpgrade: false)
             .tap { result in
                 guard case .rejected(let error as AppleAPI.Client.Error) = result else { 
                     XCTFail("login fulfilled, but should have rejected with .noTrustedPhoneNumbers error")

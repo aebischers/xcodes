@@ -80,7 +80,7 @@ extension Network {
         dataTask: { url in return Promise.value((data: Data(), response: HTTPURLResponse(url: url.pmkRequest.url!, statusCode: 200, httpVersion: nil, headerFields: nil)!)) },
         downloadTask: { url, saveLocation, _ in return (Progress(), Promise.value((saveLocation, HTTPURLResponse(url: url.pmkRequest.url!, statusCode: 200, httpVersion: nil, headerFields: nil)!))) },
         validateSession: { Promise() },
-        login: { _, _ in Promise() }
+        login: { _, _, _ in Promise() }
     )
 }
 

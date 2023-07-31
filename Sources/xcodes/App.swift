@@ -129,6 +129,9 @@ struct Xcodes: AsyncParsableCommand {
                 completion: .shellCommand("ls \(FastlaneSessionManager.Constants.fastlaneSpaceshipDir)"))
         var fastlaneUser: String = FastlaneSessionManager.Constants.fastlaneSessionEnvVarName
 
+        @Flag(name: [.customLong("skip-2fa-upgrade")], help: "Skip 2 Factor Authentication Upgrade.")
+        var skip2FaUpgrade: Bool = false
+
         @OptionGroup
         var globalDataSource: GlobalDataSourceOption
 
@@ -149,6 +152,8 @@ struct Xcodes: AsyncParsableCommand {
             } else {
                 installation = .version(versionString)
             }
+            
+            sessionService.skip2FaUpgrade = skip2FaUpgrade
             
             let downloader = noAria2 ? Downloader.urlSession : Downloader(aria2Path: aria2)
 
@@ -234,6 +239,9 @@ struct Xcodes: AsyncParsableCommand {
                 completion: .shellCommand("ls \(FastlaneSessionManager.Constants.fastlaneSpaceshipDir)"))
         var fastlaneUser: String = FastlaneSessionManager.Constants.fastlaneSessionEnvVarName
 
+        @Flag(name: [.customLong("skip-2fa-upgrade")], help: "Skip 2 Factor Authentication Upgrade.")
+        var skip2FaUpgrade: Bool = false
+
         @OptionGroup
         var globalDataSource: GlobalDataSourceOption
 
@@ -255,6 +263,8 @@ struct Xcodes: AsyncParsableCommand {
             } else {
                 installation = .version(versionString)
             }
+            
+            sessionService.skip2FaUpgrade = skip2FaUpgrade
             
             let downloader = noAria2 ? Downloader.urlSession : Downloader(aria2Path: aria2)
 

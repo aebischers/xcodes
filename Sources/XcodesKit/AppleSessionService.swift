@@ -8,6 +8,7 @@ public class AppleSessionService {
     private let xcodesPassword = "XCODES_PASSWORD"
 
     var configuration: Configuration
+    public var skip2FaUpgrade: Bool = false
 
     public init(configuration: Configuration) {
         self.configuration = configuration
@@ -65,7 +66,7 @@ public class AppleSessionService {
             guard let password = possiblePassword else { throw Error.missingUsernameOrPassword }
 
             return firstly { () -> Promise<Void> in
-                self.login(username, password: password)
+                self.login(username, password: password, skip2FaUpgrade: self.skip2FaUpgrade)
             }
             .recover { error -> Promise<Void> in
                 Current.logging.log(error.legibleLocalizedDescription.red)
@@ -82,9 +83,9 @@ public class AppleSessionService {
         }
     }
 
-    func login(_ username: String, password: String) -> Promise<Void> {
+    func login(_ username: String, password: String, skip2FaUpgrade: Bool) -> Promise<Void> {
         return firstly { () -> Promise<Void> in
-            Current.network.login(accountName: username, password: password)
+            Current.network.login(accountName: username, password: password, skip2FaUpgrade: skip2FaUpgrade)
         }
         .recover { error -> Promise<Void> in
 
