@@ -300,7 +300,7 @@ public struct Network {
 
     public var validateSession: () -> Promise<Void> = client.validateSession
 
-    public var login: (String, String, Bool) -> Promise<Void> = { client.login(accountName: $0, password: $1, skip2FaUpgrade: $2) }
+    public var login: (String, String, Bool) -> Promise<Void> = { client.srpLogin(accountName: $0, password: $1, skip2FaUpgrade: $2) }
     public func login(accountName: String, password: String, skip2FaUpgrade: Bool) -> Promise<Void> {
         login(accountName, password, skip2FaUpgrade)
     }
